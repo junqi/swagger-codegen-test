@@ -1,0 +1,56 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Test API
+  description: ''
+servers: null
+host: api.example.com
+basePath: /
+schemes:
+  - https
+paths:
+  '/stock/v1/stocks/{id}':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: 在庫商品ID
+      responses:
+        '200':
+          description: 在庫商品の情報
+          schema:
+            $ref: '#/definitions/Stock'
+definitions:
+  Stock:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      customer_name:
+        type: string
+      detail:
+        type: object
+        oneOf:
+          - $ref: '#/definitions/Watch'
+          - $ref: '#/definitions/Diamond'
+  Watch:
+    type: object
+    properties:
+      name:
+        type: string
+      weight:
+        type: integer
+  Diamond:
+    type: object
+    properties:
+      name:
+        type: string
+      carat:
+        type: integer
