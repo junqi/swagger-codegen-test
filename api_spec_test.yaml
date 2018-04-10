@@ -7,7 +7,7 @@ servers: null
 host: api.example.com
 basePath: /
 schemes:
-  - https
+  - http
 paths:
   '/stock/v1/stocks/{id}':
     get:
@@ -17,15 +17,23 @@ paths:
         - name: id
           in: path
           required: true
-          schema:
-            type: integer
-            format: int64
+          type: integer
+          format: int64
           description: 在庫商品ID
       responses:
         '200':
           description: 在庫商品の情報
           schema:
             $ref: '#/definitions/Stock'
+          examples:
+            application/json: |-
+              {
+                "detail_type": "Watch",
+                "id": 0,
+                "customer_name": "customer_name",
+                "detail": {"name": "name-val", "weight": 10},
+                "barcode": 6
+              }
 definitions:
   Stock:
     type: object
@@ -33,7 +41,11 @@ definitions:
       id:
         type: integer
         format: int64
+      barcode:
+        type: integer
       customer_name:
+        type: string
+      detail_type:
         type: string
       detail:
         type: object
