@@ -28,10 +28,12 @@ paths:
           examples:
             application/json: |-
               {
-                "detail_type": "Watch",
                 "id": 0,
                 "customer_name": "customer_name",
-                "detail": {"name": "name-val", "weight": 10},
+                "detail": {
+                  "detail_type": "Watch",
+                  "entity": {"name": "name-val", "weight": 10}
+                },
                 "barcode": 6
               }
 definitions:
@@ -45,13 +47,8 @@ definitions:
         type: integer
       customer_name:
         type: string
-      detail_type:
-        type: string
       detail:
-        type: object
-        oneOf:
-          - $ref: '#/definitions/Watch'
-          - $ref: '#/definitions/Diamond'
+        $ref: '#/definitions/StockDetailContainer'
   Watch:
     type: object
     properties:
@@ -66,3 +63,8 @@ definitions:
         type: string
       carat:
         type: integer
+  StockDetailContainer: # swift clientは手で実装
+    type: object
+    properties:
+      detail_type:
+        type: string
